@@ -2,9 +2,9 @@ import { View, Text, StyleSheet, Image, Button, TouchableOpacity, Platform } fro
 import React from 'react';
 
 
-export default function ShipCard({ navigation, ...props }) {
+export default function ShipCard({ navigation, id, title }) {
     const handlePress = () => {
-        navigation.navigate('Подробности', { id: props.ID });
+        navigation.navigate('Подробности', { id: id });
     };
 
     return (
@@ -15,11 +15,8 @@ export default function ShipCard({ navigation, ...props }) {
                     <Image source={require('./starship.jpg')}></Image>
                 </View>
                 <Text href='' style={styles.textItem}>
-                    {props.Title}
+                    {title}
                 </Text>
-                {/* <View style={styles.description}>
-                    <Text style={styles.type}>{props.Type}</Text>
-                </View> */}
             </View> 
         </TouchableOpacity>
         

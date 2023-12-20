@@ -10,15 +10,16 @@ import { useFocusEffect } from '@react-navigation/native';
 export default function ShopScreen({ navigation }) {
     const dispatch = useDispatch();
     const [searchValue, setSearchValue] = useState('');
-    const { ships } = useSelector((store) => store.ship);
+    const { ships } = useSelector((state) => state.ship);
   
     const handleSearch = async () => {
       try {
         const response = await axiosInstance.get(
           `/api/ships?search=${searchValue}`
         );
-        dispatch(setShips(response?.data));
-        console.log('API response:', response.data);
+        dispatch(setShips(response?.data.data));
+        console.log('API response:', response.data.data);
+
       } catch (error) {
         console.error('Error during search:', error);
       }
@@ -29,14 +30,17 @@ export default function ShopScreen({ navigation }) {
         async function getAllShips() {
           try {
             const response = await axiosInstance.get('/api/ships');
-            dispatch(setShips(response?.data));
-            console.log('API response:', response.data);
+            dispatch(setShips(response?.data.data));
+            console.log('API response:', response.data.data);
           } catch (error) {
             console.error('Error fetching documents:', error);
           }
         }
         console.log('useeff');
         getAllShips();
+        return () => {
+          dispatch(setShips([]));
+        };
       }, [dispatch]))
   
     return (
@@ -60,9 +64,11 @@ export default function ShopScreen({ navigation }) {
 
           {/* Card Container */}
           <View style={styles.cardContainer}>
-            { !!ships.data && ships.data.map((ship) => (
-              <ShipCard key={ship.id} {...ship} navigation={navigation}/>
-            ))}
+            { !!ships && ships.map((ship) => {
+              console.log(ship.Title);
+              return(
+              <ShipCard key={ship.id} id={ship.ID} title={ship.Title} navigation={navigation}/>
+            )})}
           </View>
         </View>
     </ScrollView>

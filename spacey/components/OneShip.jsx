@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Image, Button, TouchableOpacity, Platform } from 'react-native';
 import React from 'react';
 
-export default function OneDocument({ ...props }) {
+export default function OneShip({ ...props }) {
 
     return (    
         <View style={styles.mycontainer}>

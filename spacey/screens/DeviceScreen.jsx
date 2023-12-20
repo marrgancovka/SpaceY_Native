@@ -11,13 +11,13 @@ export default function DeviceScreen() {
     const route = useRoute();
     const shipId = route.params?.id || 'No ID';
     const dispatch = useDispatch();
-    const { ship } = useSelector((store) => store.ship);
+    const { ship } = useSelector((state) => state.ship);
     
     useEffect(() => {
         async function getShip() {
             const response = await axiosInstance.get(`/api/ships/${shipId}`);
-            dispatch(setShip(response?.data));
-            console.log(response.data)
+            dispatch(setShip(response?.data.data));
+            console.log(response.data.data)
         }
         getShip();
     }, [dispatch]);
@@ -25,7 +25,7 @@ export default function DeviceScreen() {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.page}>
-                {!!ship.data && <OneShip key={ship.data.ID} {...ship.data} />}
+                {!!ship && <OneShip key={ship.ID} {...ship} />}
             </View>        
         </ScrollView>
 
